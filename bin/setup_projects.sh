@@ -17,6 +17,8 @@ oc new-project ${GUID}-jenkins    --display-name="${GUID} AdvDev Homework Jenkin
 oc new-project ${GUID}-tasks-dev  --display-name="${GUID} AdvDev Homework Tasks Development"
 oc new-project ${GUID}-tasks-prod --display-name="${GUID} AdvDev Homework Tasks Production"
 
+oc project ${GUID}-jenkins
+
 if [ "$FROM_JENKINS" = "true" ]; then
   oc policy add-role-to-user admin ${USER} -n ${GUID}-jenkins
   oc policy add-role-to-user admin ${USER} -n ${GUID}-tasks-dev
@@ -25,6 +27,4 @@ if [ "$FROM_JENKINS" = "true" ]; then
   oc annotate namespace ${GUID}-jenkins    openshift.io/requester=${USER} --overwrite
   oc annotate namespace ${GUID}-tasks-dev  openshift.io/requester=${USER} --overwrite
   oc annotate namespace ${GUID}-tasks-prod openshift.io/requester=${USER} --overwrite
-  
-  oc project $GUID-jenkins
 fi
